@@ -9,40 +9,27 @@ Uncomment this line out for PhoneGap support
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.1.0.js"></script>
+<script src="credentials.js"></script>
 <script src="zvs.js"></script>
-</head>
-<body>
-<h1>Hello World</h1>
-<div id="Message">
-</div>
-<div id="Devices">
-</div>
-</body>
+<script src="jQuery.zvs.js"></script>
+
 
 
 <script>
-$(function() {
+$(document).ready(function() {
  // Handler for .ready() called.
- 	
- 	
- 	client = new zvs("HOST", PORT, PASSWORD);
- 	
- 	client.login(function(data) {
-		if(data.success) {
-			$("#Message").text("You have been logged in, discovering devices");
-			client.listDevices(function(devices) {
-				console.log(devices);
-				$("#Devices").text("Devices found!" + devices);
-			}, fail);
-		}
-	}, fail);
-	
-	var fail = function(a,b,c) {
-		console.log('fail', a,b,c);
-	}
+ 	$("#ClientApp").zvs();	
 });
 
-var client;
+
 </script>
 
+</head>
+<body>
+<div id="ClientApp">
+	<ol data-bind="foreach: devices">
+		<ol data-bind="text: name"></ol>
+	</ol>
+</div>
+</body>
 </html>
