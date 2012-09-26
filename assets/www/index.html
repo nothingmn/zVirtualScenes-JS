@@ -9,6 +9,7 @@ Uncomment this line out for PhoneGap support
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.1.0.js"></script>
+<script src="dataContext.js"></script>
 <script src="credentials.js"></script>
 <script src="zvs.js"></script>
 <script src="jQuery.zvs.js"></script>
@@ -27,8 +28,9 @@ $(document).ready(function() {
 </head>
 <body>
 <div id="ClientApp">
-	<ol data-bind="foreach: devices">
-		<ol data-bind="text: name"></ol>
+	<span data-bind="text: Message"></span>
+	<ol data-bind="foreach: Devices, click: loadDeviceCommands">
+		<li><a href="#" data-bind="text: name"></a></li>
 	</ol>
 </div>
 </body>
