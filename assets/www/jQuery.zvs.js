@@ -14,31 +14,69 @@
 
         base.init = function () {
             base.options = $.extend({}, $.zvs.defaultOptions, options);
+			
+			jQuery.support.cors = true;
+			$.mobile.fallbackTransition = "none"
+			$.mobile.defaultPageTransition = "slide"
 
+			$.mobile.changePage('#Devices'); //force the default landing page if they refresh or whatever
+			
 			base.client = new zvs(credentials());	
 			base.context = new dataContext();
 			
+			base.context.OnDeviceLoadCommands = function(selectedItem) {
+				base.client.listDeviceCommands(selectedItem.id, function(commands) {
+					base.context.SelectedDeviceCommands(commands.DeviceCommand);					
+				}, base.fail);
+			}
+			
+			base.context.OnSendCommand = function(device, command, arg) {				
+				base.client.sendDeviceCommand(device.id, command.name, arg, command.type, function(complete) {
+					if(complete.success){
+						base.context.Message("Command "+command.name+" sent to:" + device.name);
+					} else {
+						base.context.Message("Command "+command.name+" was NOT sent to:" + device.name);
+					}
+				}, base.fail);
+			}
+			base.context.OnRunScene = function(scene) {
+				base.client.startScene(scene.id, function(complete) {
+					if(complete.success){
+						base.context.Message("Scene: "+scene.name+" was started");
+					} else {
+						base.context.Message("Scene: "+scene.name+" was NOT started");
+					}					
+				}, base.fail);
+			}
 			base.client.login(function(data) {
 				if(data.success) {
 					base.context.Message("Login was successful, retreiving a list of devices");
 					base.client.listDevices(function(devices) {
-						console.log(devices);
 						base.context.Message("Recieved a list of devices");
 						base.context.Devices.removeAll();
 						var dev = devices.devices;
 						var max = dev.length;
-						for(var x=0;x<=max;x++) {
+						for(var x=0;x<max;x++) {							
 							base.context.Devices.push(dev[x]);
 						}
+						
+						base.client.listScenes(function(scenes) {
+							base.context.Scenes.removeAll();
+							var sc = scenes.scenes;
+							var max = sc.length;
+							for(var x=0;x<max;x++) {
+								base.context.Scenes.push(sc[x]);
+							}	
+							ko.applyBindings(base.context);							
+						}, base.fail);
+						
 					}, base.fail);
 				}
 			}, base.fail);
 			
 			base.fail = function(a,b,c) {
-				console.log('fail', a,b,c);
 			}
-
-           ko.applyBindings(base.context);
+           
         }; //init
 
         // Run initializer
