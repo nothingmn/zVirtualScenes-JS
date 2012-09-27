@@ -28,19 +28,30 @@ $(document).ready(function() {
 <body>
 <div id="ClientApp">
 	<div data-role="page" id="Devices" > 
-		<div data-role="header">Devices</div> 
-		<div data-role="content" data-bind="foreach: Devices">
-			<a data-role="button"  data-icon="star"  href="#SelectedDeviceCommands" data-bind="text: DisplayName, click: $parent.loadDeviceCommands"></a>
-		</div> 
+	
+		<ul data-role="listview">
+			<li data-role="list-divider">Devices</li>
+			<!-- ko foreach: Devices -->
+			<li>
+				<a data-role="button"  data-icon="star"  href="#SelectedDeviceCommands" data-bind="text: DisplayName, click: $parent.loadDeviceCommands"></a>
+			</li>
+			<!-- /ko -->
+			<li data-role="list-divider">Scenes</li>
+			<!-- ko foreach: Scenes -->
+			<li>
+				<a data-role="button"  data-icon="star"  href="#" data-bind="text: DisplayName, click: $parent.runScene"></a>
+			</li>
+			<!-- /ko -->
+		</ul>
+			
 		<div data-role="footer">
 			<a href="#" data-role="button" data-icon="refresh">Refresh</a>
-			<a href="#Devices" data-role="button" data-icon="home">Devices</a>
-			<a href="#Scenes" data-role="button" data-icon="star">Scenes</a>
+			<a href="#Devices" data-role="button" data-icon="home">Home</a>
 			<span data-bind="text: Message"></span>	
 		</div> 
 	</div>
 	<div data-role="page" id="SelectedDeviceCommands"> 
-		<div data-role="header"><span data-bind="text: SelectedDevice().name"></span> Commands</div> 
+		<div data-role="header"><span data-bind="text: SelectedDevice().DisplayName"></span> Commands</div> 
 		<div data-role="content" data-bind="foreach: SelectedDeviceCommands">		
 			<!-- ko ifnot: $root.SelectedDeviceCommandNeedsInput($data) -->
 			<a data-role="button" data-icon="star" 
@@ -51,20 +62,19 @@ $(document).ready(function() {
 			<!-- ko if: $root.SelectedDeviceCommandNeedsInput($data) -->
 			<a data-role="button"  data-icon="star" 
 				href="#SelectedDeviceCommandsArgInput" 
-				data-bind="text: name, click: $parent.selectDeviceCommand">
+				data-bind="text: friendlyname, click: $parent.selectDeviceCommand">
 			</a>
 			<!-- /ko -->		
 		</div> 
 		<div data-role="footer">
 			<a href="#" data-role="button" data-icon="refresh">Refresh</a>
-			<a href="#Devices" data-role="button" data-icon="home">Devices</a>
-			<a href="#Scenes" data-role="button" data-icon="star">Scenes</a>
+			<a href="#Devices" data-role="button" data-icon="home">Home</a>
 			<span data-bind="text: Message"></span>	
 		</div> 
 	</div>
 	
 	<div data-role="page" id="SelectedDeviceCommandsArgInput"> 
-		<div data-role="header"><span data-bind="text: SelectedDevice().name"></span> Argument</div> 
+		<div data-role="header"><span data-bind="text: SelectedDevice().DisplayName + ' -> ' + SelectedDeviceCommand().friendlyname"></span> Argument</div> 
 		<div data-role="content">
 			Argument to send:
 			<input data-bind="value: DeviceCommandArg" />
@@ -72,24 +82,10 @@ $(document).ready(function() {
 		</div> 
 		<div data-role="footer">
 			<a href="#" data-role="button" data-icon="refresh">Refresh</a>
-			<a href="#Devices" data-role="button" data-icon="home">Devices</a>
-			<a href="#Scenes" data-role="button" data-icon="star">Scenes</a>
+			<a href="#Devices" data-role="button" data-icon="home">Home</a>
 			<span data-bind="text: Message"></span>	
 		</div> 
 	</div>
-	
-	<div data-role="page" id="Scenes"> 
-		<div data-role="header">Scenes</div> 
-		<div data-role="content" data-bind="foreach: Scenes">
-			<a data-role="button"  data-icon="star"  href="#" data-bind="text: DisplayName, click: $parent.runScene"></a>
-		</div> 
-		<div data-role="footer">
-			<a href="#" data-role="button" data-icon="refresh">Refresh</a>
-			<a href="#Devices" data-role="button" data-icon="home">Devices</a>
-			<a href="#Scenes" data-role="button" data-icon="star">Scenes</a>
-			<span data-bind="text: Message"></span>	
-		</div> 
-	</div>	
 	
 </div>
 </body>
