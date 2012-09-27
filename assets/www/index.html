@@ -18,10 +18,9 @@ Uncomment this line out for PhoneGap support
 <link rel="stylesheet" type="text/css" href="zvs.css" />
 <script>
 $(document).ready(function() {
- // Handler for .ready() called.
- 	$("#ClientApp").zvs();	
+ // Handler for .ready() called.	
+ 	var zvs = $("#ClientApp").zvs();	
 });
-
 
 </script>
 
@@ -31,9 +30,10 @@ $(document).ready(function() {
 	<div data-role="page" id="Devices" > 
 		<div data-role="header">Devices</div> 
 		<div data-role="content" data-bind="foreach: Devices">
-			<a data-role="button"  data-icon="star"  href="#SelectedDeviceCommands" data-bind="text: name, click: $parent.loadDeviceCommands"></a>
+			<a data-role="button"  data-icon="star"  href="#SelectedDeviceCommands" data-bind="text: DisplayName, click: $parent.loadDeviceCommands"></a>
 		</div> 
 		<div data-role="footer">
+			<a href="#" data-role="button" data-icon="refresh">Refresh</a>
 			<a href="#Devices" data-role="button" data-icon="home">Devices</a>
 			<a href="#Scenes" data-role="button" data-icon="star">Scenes</a>
 			<span data-bind="text: Message"></span>	
@@ -56,6 +56,7 @@ $(document).ready(function() {
 			<!-- /ko -->		
 		</div> 
 		<div data-role="footer">
+			<a href="#" data-role="button" data-icon="refresh">Refresh</a>
 			<a href="#Devices" data-role="button" data-icon="home">Devices</a>
 			<a href="#Scenes" data-role="button" data-icon="star">Scenes</a>
 			<span data-bind="text: Message"></span>	
@@ -70,6 +71,7 @@ $(document).ready(function() {
 			<a data-role="button" href="#" data-rel="back" data-bind="text: 'Send', click: $root.sendDeviceCommand"></a>
 		</div> 
 		<div data-role="footer">
+			<a href="#" data-role="button" data-icon="refresh">Refresh</a>
 			<a href="#Devices" data-role="button" data-icon="home">Devices</a>
 			<a href="#Scenes" data-role="button" data-icon="star">Scenes</a>
 			<span data-bind="text: Message"></span>	
@@ -79,9 +81,10 @@ $(document).ready(function() {
 	<div data-role="page" id="Scenes"> 
 		<div data-role="header">Scenes</div> 
 		<div data-role="content" data-bind="foreach: Scenes">
-			<a data-role="button"  data-icon="star"  href="#" data-bind="text: name, click: $parent.runScene"></a>
+			<a data-role="button"  data-icon="star"  href="#" data-bind="text: DisplayName, click: $parent.runScene"></a>
 		</div> 
 		<div data-role="footer">
+			<a href="#" data-role="button" data-icon="refresh">Refresh</a>
 			<a href="#Devices" data-role="button" data-icon="home">Devices</a>
 			<a href="#Scenes" data-role="button" data-icon="star">Scenes</a>
 			<span data-bind="text: Message"></span>	

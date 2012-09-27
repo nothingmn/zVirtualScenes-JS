@@ -18,8 +18,17 @@
 			jQuery.support.cors = true;
 			$.mobile.fallbackTransition = "none"
 			$.mobile.defaultPageTransition = "slide"
+//			$.mobile.changePage('#Devices'); //force the default landing page if they refresh or whatever
 
-			$.mobile.changePage('#Devices'); //force the default landing page if they refresh or whatever
+						
+			$("[data-icon='refresh']").click(function() {
+				base.mobileRefreshPage();
+			});
+			
+			base.mobileRefreshPage = function(page){
+				if(typeof page == 'undefined') page = $.mobile.activePage;
+				page.trigger('pagecreate');
+			}
 			
 			base.client = new zvs(credentials());	
 			base.context = new dataContext();
@@ -51,20 +60,26 @@
 			base.client.login(function(data) {
 				if(data.success) {
 					base.context.Message("Login was successful, retreiving a list of devices");
-					base.client.listDevices(function(devices) {
+					base.client.listDevices(function(devices) {						
 						base.context.Message("Recieved a list of devices");
 						base.context.Devices.removeAll();
 						var dev = devices.devices;
 						var max = dev.length;
-						for(var x=0;x<max;x++) {							
-							base.context.Devices.push(dev[x]);
+						for(var x=0;x<max;x++) {	
+							var device = dev[x];
+							device.DisplayName = device.name;
+							if(device.level_txt!='') device.DisplayName += " (" + device.level_txt + ")";
+							base.context.Devices.push(device);
 						}
 						
-						base.client.listScenes(function(scenes) {
+						base.client.listScenes(function(scenes) {							
 							base.context.Scenes.removeAll();
 							var sc = scenes.scenes;
 							var max = sc.length;
 							for(var x=0;x<max;x++) {
+								var scene = sc[x];
+								scene.DisplayName = scene.name;
+								if(typeof scene.cmd_count=='number') scene.DisplayName += " (" + scene.cmd_count + ")";
 								base.context.Scenes.push(sc[x]);
 							}	
 							ko.applyBindings(base.context);							
