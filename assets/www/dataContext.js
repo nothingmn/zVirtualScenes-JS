@@ -5,7 +5,7 @@ var dataContext = function() {
         return new dataContext();
     } 
 	base = this;
-	this.DeviceCommandArg = new ko.observable("99");
+	this.DeviceCommandArg = new ko.observable("");
 	this.Message = new ko.observable(""),
 	this.Devices = new ko.observableArray();
 	this.Scenes = new ko.observableArray();
@@ -30,13 +30,17 @@ var dataContext = function() {
 	this.selectDeviceCommand = function(data, event) {
 		base.SelectedDeviceCommand(data);
 	}
+	this.sendDeviceTypeDeviceCommand = function(data, event) {
+		base.SelectedDeviceCommand(data);
+		base.DeviceCommandArg("");
+		base.sendDeviceCommand(data, event);
+	}
 	this.sendDeviceCommand = function(data, event) {
 		var device = base.SelectedDevice();
 		var command = base.SelectedDeviceCommand();
 		var arg = base.DeviceCommandArg();
 		if(command.type!="device") {
 			arg = '';
-			command = data;
 		}
 		if(typeof base.OnSendCommand !='undefined') base.OnSendCommand(device, command,  arg);
 		

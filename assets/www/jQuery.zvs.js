@@ -33,9 +33,9 @@
 			base.context.OnSendCommand = function(device, command, arg) {				
 				base.client.sendDeviceCommand(device.id, command.name, arg, command.type, function(complete) {
 					if(complete.success){
-						base.context.Message("Command "+command.name+" sent to:" + device.name);
+						base.context.Message("Command "+command.friendlyname+" sent to:" + device.name);
 					} else {
-						base.context.Message("Command "+command.name+" was NOT sent to:" + device.name);
+						base.context.Message("Command "+command.friendlyname+" was NOT sent to:" + device.name);
 					}
 				}, base.fail);
 			}

@@ -60,7 +60,9 @@ var controller = function(credentials) {
 	this.sendDeviceCommand = function(deviceID, name, arg, type, complete, fail) {
 		var action = "/API/device/" + deviceID + "/command";
 		var method = "POST";
-		var data = {u:Math.random(), name:name, arg:arg, type:type};
+		var data = {u:Math.random(), name:name, type:type};
+		if(typeof arg!='undefined' && arg!='') data.arg = arg;
+		
 		this.ajax(action, method, data, complete, fail);		
 	}	
 	this.listDeviceCommands = function(deviceID, complete, fail) {
@@ -95,6 +97,8 @@ var controller = function(credentials) {
 	this.ajax = function(action, method, params, complete, fail) {
 		if (typeof method == 'undefined') method = 'POST';
 		var url = this.credentials.Host + ":" + this.credentials.Port + action;
+		
+		console.log(method, url, params);
 		return $.ajax({
 			type:method,
 			url:url,

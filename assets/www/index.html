@@ -45,7 +45,7 @@ $(document).ready(function() {
 			<!-- ko ifnot: $root.SelectedDeviceCommandNeedsInput($data) -->
 			<a data-role="button" data-icon="star" 
 				href="#"  data-rel="back"
-				data-bind="text: friendlyname, click: $parent.sendDeviceCommand">
+				data-bind="text: friendlyname, click: $parent.sendDeviceTypeDeviceCommand">
 			</a>	
 			<!-- /ko -->
 			<!-- ko if: $root.SelectedDeviceCommandNeedsInput($data) -->
