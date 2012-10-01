@@ -15,24 +15,10 @@ var zvs = function(credentials) {
 		this.controller.login(complete, fail);
 	}
 	this.listDevices = function(complete, fail) {	
-		if(typeof this.devices =='undefined') {
-			this.controller.listDevices(function(d) {
-				this.devices = d;
-				complete(this.devices);
-			}, fail);
-		} else {
-			complete(this.devices);
-		}
+		this.controller.listDevices(complete, fail);
 	}
 	this.listScenes = function(complete, fail) {	
-		if(typeof this.scenes =='undefined') {
-			this.controller.listScenes(function(s) {
-				this.scenes = s;
-				complete(this.scenes);
-			}, fail);
-		} else {
-			complete(this.scenes);
-		}
+		this.controller.listScenes(complete, fail);
 	}
 	
 	this.listDeviceCommands = function(deviceID, complete, fail) {

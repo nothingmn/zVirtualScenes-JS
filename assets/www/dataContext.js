@@ -6,7 +6,7 @@ var dataContext = function() {
     } 
 	base = this;
 	this.DeviceCommandArg = new ko.observable("");
-	this.Message = new ko.observable(""),
+	this.Message = new ko.observable(""),	
 	this.Devices = new ko.observableArray();
 	this.Scenes = new ko.observableArray();
 	this.SelectedDevice = new ko.observable({});
@@ -51,7 +51,5 @@ var dataContext = function() {
 		//base.SelectedDevice(data);
 		if(typeof base.OnRunScene !='undefined') base.OnRunScene(data);
 	}
-	
-	
-	
+
 }

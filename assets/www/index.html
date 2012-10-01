@@ -6,6 +6,9 @@
 Uncomment this line out for PhoneGap support
 <script type="text/javascript" charset="utf-8" src="cordova-1.9.0.js"></script>
 -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta charset="utf-8" http-equiv="X-UA-Compatible" content="IE=9" />
+<meta http-equiv="CACHE-CONTROL" content="NO-CACHE" />
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.1.0.js"></script>
@@ -27,62 +30,90 @@ $(document).ready(function() {
 </head>
 <body>
 <div id="ClientApp">
-	<div data-role="page" id="Devices" > 
-	
-		<ul data-role="listview">
-			<li data-role="list-divider">Devices</li>
-			<!-- ko foreach: Devices -->
-			<li>
-				<a data-role="button"  data-icon="star"  href="#SelectedDeviceCommands" data-bind="text: DisplayName, click: $parent.loadDeviceCommands"></a>
-			</li>
-			<!-- /ko -->
-			<li data-role="list-divider">Scenes</li>
-			<!-- ko foreach: Scenes -->
-			<li>
-				<a data-role="button"  data-icon="star"  href="#" data-bind="text: DisplayName, click: $parent.runScene"></a>
-			</li>
-			<!-- /ko -->
-		</ul>
-			
-		<div data-role="footer">
-			<a href="#" data-role="button" data-icon="refresh">Refresh</a>
+	<div data-role="page" id="Devices"> 
+		<div data-role="header" data-position="fixed">
+			<h1>zVirtualScenes Client</h1>
+		</div>	
+		<div data-role="content">
+			<ul data-role="listview" id="DevicesLV" data-inset="true" data-filter="true">
+				<li data-role="list-divider" role="heading">Devices</li>
+				<!-- ko foreach: Devices -->
+				<li>
+					<a data-icon="star"  href="#SelectedDeviceCommands" data-bind="text: DisplayName, click: $parent.loadDeviceCommands"></a>
+				</li>
+				<!-- /ko -->
+				<li data-role="list-divider">Scenes</li>
+				<!-- ko foreach: Scenes -->
+				<li>
+					<a data-icon="star"  href="#" data-bind="text: DisplayName, click: $parent.runScene"></a>
+				</li>
+				<!-- /ko -->
+			</ul>
+		</div>	
+		<div data-role="footer" data-position="fixed">
 			<a href="#Devices" data-role="button" data-icon="home">Home</a>
+			<a href="#" data-role="button" data-icon="refresh" class='refresh'>Refresh</a>
 			<span data-bind="text: Message"></span>	
 		</div> 
 	</div>
 	<div data-role="page" id="SelectedDeviceCommands"> 
-		<div data-role="header"><span data-bind="text: SelectedDevice().DisplayName"></span> Commands</div> 
-		<div data-role="content" data-bind="foreach: SelectedDeviceCommands">		
-			<!-- ko ifnot: $root.SelectedDeviceCommandNeedsInput($data) -->
-			<a data-role="button" data-icon="star" 
-				href="#"  data-rel="back"
-				data-bind="text: friendlyname, click: $parent.sendDeviceTypeDeviceCommand">
-			</a>	
-			<!-- /ko -->
-			<!-- ko if: $root.SelectedDeviceCommandNeedsInput($data) -->
-			<a data-role="button"  data-icon="star" 
-				href="#SelectedDeviceCommandsArgInput" 
-				data-bind="text: friendlyname, click: $parent.selectDeviceCommand">
-			</a>
-			<!-- /ko -->		
-		</div> 
-		<div data-role="footer">
-			<a href="#" data-role="button" data-icon="refresh">Refresh</a>
+		<div data-role="header" data-position="fixed">
+			<h1>zVirtualScenes Client</h1>
+		</div>	
+		<div data-role="content">
+			<div data-role="header" data-position="fixed">
+				<h1>zVirtualScenes Client</h1>
+			</div>	
+			<ul data-role="listview" id="CommandsLV" data-inset="true">
+				<li data-role="list-divider" data-bind="text: SelectedDevice().DisplayName"></li>
+				<!-- ko foreach: SelectedDeviceCommands -->
+					<!-- ko ifnot: $root.SelectedDeviceCommandNeedsInput($data) -->
+				<li>
+					<a  href="#"  data-rel="back"
+						data-bind="text: friendlyname, click: $parent.sendDeviceTypeDeviceCommand">
+					</a>	
+				</li>
+					<!-- /ko -->
+					<!-- ko if: $root.SelectedDeviceCommandNeedsInput($data) -->
+				<li>
+					<a  data-icon="star" 
+						href="#SelectedDeviceCommandsArgInput" 
+						data-bind="text: friendlyname, click: $parent.selectDeviceCommand">
+					</a>
+				</li>
+					<!-- /ko -->
+				<!-- /ko -->
+			</ul>
+		</div>
+					
+		<div data-role="footer" data-position="fixed">
 			<a href="#Devices" data-role="button" data-icon="home">Home</a>
+			<a href="#" data-role="button" data-icon="refresh" class='refresh'>Refresh</a>
 			<span data-bind="text: Message"></span>	
 		</div> 
 	</div>
 	
 	<div data-role="page" id="SelectedDeviceCommandsArgInput"> 
-		<div data-role="header"><span data-bind="text: SelectedDevice().DisplayName + ' -> ' + SelectedDeviceCommand().friendlyname"></span> Argument</div> 
+		<div data-role="header" data-position="fixed">
+			<h1>zVirtualScenes Client</h1>
+		</div>	
 		<div data-role="content">
-			Argument to send:
-			<input data-bind="value: DeviceCommandArg" />
-			<a data-role="button" href="#" data-rel="back" data-bind="text: 'Send', click: $root.sendDeviceCommand"></a>
-		</div> 
-		<div data-role="footer">
-			<a href="#" data-role="button" data-icon="refresh">Refresh</a>
+			<ul data-role="listview" id="CommandArgLV" data-inset="true">
+				<li data-role="list-divider" data-bind="text: SelectedDevice().DisplayName + ' -> ' + SelectedDeviceCommand().friendlyname"></li>
+				<li>
+					Argument to send:
+				</li>
+				<li>
+					<input data-bind="value: DeviceCommandArg" />
+				</li>
+				<li>
+					<a href="#Devices"  data-role="button" data-bind="text: 'Send', click: $root.sendDeviceCommand"></a>
+				</li>
+			</ul>
+		</div>			
+		<div data-role="footer" data-position="fixed">
 			<a href="#Devices" data-role="button" data-icon="home">Home</a>
+			<a href="#" data-role="button" data-icon="refresh" class='refresh'>Refresh</a>
 			<span data-bind="text: Message"></span>	
 		</div> 
 	</div>
