@@ -83,8 +83,6 @@ var controller = function(credentials) {
 	this.ajax = function(action, method, params, complete, fail) {
 		if (typeof method == 'undefined') method = 'POST';
 		var url = this.credentials.Host + ":" + this.credentials.Port + action;
-		
-		console.log(method, url, params);
 		return $.ajax({
 			type:method,
 			url:url,

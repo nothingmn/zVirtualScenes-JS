@@ -26,7 +26,6 @@
 			base.mobileRefreshPage = function(page){
 				if(typeof page == 'undefined') page = $.mobile.activePage;
 				page.trigger('pagecreate');	
-				console.log('page create triggered');				
 			}
 			
 			base.client = new zvs(credentials());	

@@ -4,7 +4,7 @@ var credentials = function() {
         return new credentials();
     } 
 	
-	this.Host = 'http://HOME';
+	this.Host = 'http://home';
 	this.Port = 8030;
-	this.Password = 'PASS';
+	this.Password = 'password';
 }
